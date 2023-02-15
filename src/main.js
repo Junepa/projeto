@@ -12,6 +12,12 @@ paragrafo.classList.add('loading');
 product.appendChild(paragrafo);
 const shopElements = async () => {
   const list = await fetchProductsList('computador');
+  if (typeof list === 'string') {
+    paragrafo.classList.remove('loading');
+    paragrafo.classList.add('error');
+    paragrafo.innerText = list;
+    return;
+  }
   paragrafo.classList.remove('loading');
   paragrafo.innerText = '';
   list.forEach((elemento) => {
