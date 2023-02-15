@@ -3,7 +3,6 @@ export const fetchProduct = async (id) => {
   const api = `https://api.mercadolibre.com/items/${id}`;
   const response = await fetch(api);
   const data = await response.json();
-  console.log(data);
   return data;
 };
 fetchProduct('MLB1405519561');

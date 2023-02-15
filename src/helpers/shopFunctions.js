@@ -1,4 +1,5 @@
-import { removeCartID } from './cartFunctions';
+import { removeCartID, saveCartID } from './cartFunctions';
+import { fetchProduct } from './fetchFunctions';
 
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
@@ -10,6 +11,7 @@ import { removeCartID } from './cartFunctions';
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'product__image';
@@ -59,6 +61,7 @@ const removeCartProduct = (li, id) => {
  * @param {string} product.pictures - Imagens do produto.
  * @returns {Element} Elemento de um product do carrinho.
  */
+
 export const createCartProductElement = ({ id, title, price, pictures }) => {
   const li = document.createElement('li');
   li.className = 'cart__product';
@@ -90,7 +93,17 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   li.addEventListener('click', () => removeCartProduct(li, id));
   return li;
 };
+const ol = document.getElementById('ol');
 
+const btnCapture = async (event) => {
+  const id = event.target.parentNode.firstElementChild.innerText; // para pegar o texto do innerText do elemento span
+  // console.log(id); // adicionando o id do produto ao localStorage
+  saveCartID(id); // adiciona o ID ao localStorage;
+  const reqAPI = await fetchProduct(id); // faz a requisição à API e aguarda retornar os dados dos
+  // console.log(reqAPI)
+  const li = createCartProductElement(reqAPI);// criação de um elemento li (div/section)
+  ol.appendChild(li);
+};
 /**
  * Função responsável por criar e retornar o elemento do produto.
  * @param {Object} product - Objeto do produto.
@@ -121,6 +134,8 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     'product__add',
     'Adicionar ao carrinho!',
   );
+  cartButton.onclick = btnCapture;
+  // igual a cartButton.addEventListener('click', () =>{})
   section.appendChild(cartButton);
 
   return section;
