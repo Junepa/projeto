@@ -5,7 +5,6 @@ export const fetchProduct = async (id) => {
   const data = await response.json();
   return data;
 };
-fetchProduct('MLB1405519561');
 
 export const fetchProductsList = async (produto) => {
   if (!produto) throw new Error('Termo de busca não informado');

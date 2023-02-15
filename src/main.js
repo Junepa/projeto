@@ -1,6 +1,8 @@
 import { searchCep } from './helpers/cepFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
+import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { createProductElement } from './helpers/shopFunctions';
+import { getSavedCartIDs } from './helpers/cartFunctions';
+
 import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
@@ -26,4 +28,17 @@ const shopElements = async () => {
   });
 };
 
-shopElements();
+const ol = document.getElementById('ol');
+const array2 = () => {
+  const array = getSavedCartIDs(); // requisito 9
+  array.forEach(async (element) => {
+    const arrayID = await fetchProduct(element); // fetchProduct para cada um desses ids e recuperar as informações de cada produto.
+    const elements = createProductElement(arrayID);
+    ol.appendChild(elements);
+  });
+};
+
+window.onload = () => {
+  shopElements();
+  array2();
+};
