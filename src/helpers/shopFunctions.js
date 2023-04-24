@@ -61,6 +61,20 @@ const removeCartProduct = (li, id) => {
  * @param {string} product.pictures - Imagens do produto.
  * @returns {Element} Elemento de um product do carrinho.
  */
+//Tentando somar os itens do carrinho (requisito 10)
+
+const cartValue = () => {
+  const item = document.querySelectorAll('.itemPrice');
+  console.log(item);
+  let finalPrice = 0;
+  if(item) {
+    item.forEach((elemento) => {
+finalPrice += elemento.innerHTML
+    });
+    console.log(finalPrice.toFixed(2));
+  } 
+} 
+cartValue()
 
 export const createCartProductElement = ({ id, title, price, pictures }) => {
   const li = document.createElement('li');
@@ -77,8 +91,8 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
 
   const infoContainer = createCustomElement('div', 'cart__product__info-container');
   infoContainer.appendChild(createCustomElement('span', 'product__title', title));
-  const priceElement = createCustomElement('span', 'product__price', 'R$ ');
-  priceElement.appendChild(createCustomElement('span', 'product__price__value', price));
+  const priceElement = createCustomElement('span', 'product__price' , 'R$ ');
+  priceElement.appendChild(createCustomElement('span', 'product__price__value itemPrice', price));
   infoContainer.appendChild(priceElement);
 
   li.appendChild(infoContainer);
@@ -135,7 +149,9 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     'Adicionar ao carrinho!',
   );
   cartButton.onclick = btnCapture;
+  
   // igual a cartButton.addEventListener('click', () =>{})
+ 
   section.appendChild(cartButton);
 
   return section;

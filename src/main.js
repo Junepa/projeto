@@ -1,6 +1,6 @@
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
-import { createProductElement } from './helpers/shopFunctions';
+import { createProductElement, createCartProductElement } from './helpers/shopFunctions';
 import { getSavedCartIDs } from './helpers/cartFunctions';
 
 import './style.css';
@@ -13,7 +13,8 @@ paragrafo.innerText = 'carregando...';
 paragrafo.classList.add('loading');
 product.appendChild(paragrafo);
 const shopElements = async () => {
-  const list = await fetchProductsList('computador');
+  const list = await fetchProductsList('computador'); //fetchProductList é um array com 50 produtos
+  console.log(fetchProductsList)
   if (typeof list === 'string') {
     paragrafo.classList.remove('loading');
     paragrafo.classList.add('error');
@@ -33,10 +34,12 @@ const array2 = () => {
   const array = getSavedCartIDs(); // requisito 9
   array.forEach(async (element) => {
     const arrayID = await fetchProduct(element); // fetchProduct para cada um desses ids e recuperar as informações de cada produto.
-    const elements = createProductElement(arrayID);
+    const elements = createCartProductElement(arrayID);
     ol.appendChild(elements);
   });
 };
+const totalPrice = document.getElementById('total');
+
 
 window.onload = () => {
   shopElements();

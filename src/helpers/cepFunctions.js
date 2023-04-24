@@ -1,5 +1,5 @@
 export const getAddress = () => {
-  // seu código aqui
+const cep = document.getElementById('cep');
 };
 
 export const searchCep = () => {

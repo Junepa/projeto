@@ -3,7 +3,7 @@ export const fetchProduct = async (id) => {
   const api = `https://api.mercadolibre.com/items/${id}`;
   const response = await fetch(api);
   const data = await response.json();
-  return data;
+  return data; //requisito 7
 };
 
 export const fetchProductsList = async (produto) => {
@@ -11,9 +11,11 @@ export const fetchProductsList = async (produto) => {
   try {
     const searchAPI = `https://api.mercadolibre.com/sites/MLB/search?q=${produto}`;
     const response = await fetch(searchAPI);
-    const data = await response.json();
+    const data = await response.json();    
     return data.results;
   } catch (error) {
     return 'Algum erro ocorreu, recarregue a página e tente novamente';
   }
 };
+
+
